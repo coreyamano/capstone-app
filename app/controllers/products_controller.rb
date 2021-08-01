@@ -9,5 +9,21 @@ class ProductsController < ApplicationController
     render json: product.as_json
   end
 
-  #create, update, delete to be created later
+  def create
+    product = Product.new(
+      item_name: params[:item_name],
+      description: params[:description],
+      menu_category: params[:menu_category],
+      price: params[:price],
+      availability: params[:availability],
+      image: params[:image],
+    )
+    if product.save
+      render json: product.as_json
+    else
+      render json: { Error: product.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  # update, delete to be created later
 end

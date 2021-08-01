@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_30_014905) do
+ActiveRecord::Schema.define(version: 2021_08_01_211425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "checks", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "tab_id"
+    t.string "status"
+    t.decimal "subtotal", precision: 10, scale: 2
+    t.decimal "tax", precision: 10, scale: 2
+    t.decimal "total", precision: 10, scale: 2
+    t.decimal "tip", precision: 10, scale: 2
+    t.decimal "adjusted_total", precision: 10, scale: 2
+    t.string "payment_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "ordered_items", force: :cascade do |t|
     t.integer "product_id"
@@ -33,6 +47,13 @@ ActiveRecord::Schema.define(version: 2021_07_30_014905) do
     t.decimal "price", precision: 10, scale: 2
     t.boolean "availability"
     t.string "image"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "description"
+  end
+
+  create_table "tabs", force: :cascade do |t|
+    t.string "tab_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
