@@ -9,16 +9,31 @@ class OrderedItemsController < ApplicationController
   def create
     ordered_item = OrderedItem.new(
       user_id: current_user.id,
+      tab_id: params[:tab_id]
       product_id: params[:product_id],
       quantity: params[:quantity],
       status: "ordered",
-      order_id: params[:ordered_id],
+      type: params[:type]
+      check_id: params[:check_id],
     )
 
     if ordered_item.save
       render json: ordered_item.as_json
     else
-      render json: { Error: ordered_ite.errors.full_message }, status: :unprocessable_entity
+      render json: { Error: ordered_item.errors.full_message }, status: :unprocessable_entity
     end
   end
+
+  def destroy
+    ordered_item_id = params[:id]
+    ordered_item = OrderedItem.find_by(id: ordered_item_id)
+    ordered_item.status = "removed"
+
+    if ordered_item.save
+      render json: { message: "You removed this item." }
+    else
+      render json: { Error: ordered_item.errors.full_messages }, status: :unprocessable_entity
+    end
+  end  
+
 end

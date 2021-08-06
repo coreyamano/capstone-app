@@ -6,10 +6,14 @@ Rails.application.routes.draw do
   get "/products" => "products#index"
   get "/products/:id" => "products#show"
   post "/products" => "products#create"
-  patch "/photos/:id" => "products#update"
+  patch "/products/:id" => "products#update"
   delete "/products/:id" => "products#destroy"
 
   get "/ordered_items" => "ordered_items#index"
+  post "/ordered_items" => "ordered_items#create"
+
+  get "/tabs" => "tabs#index"
+  post "/tabs" => "tabs#create"
 
   get "/checks" => "checks#index"
 end
