@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   post "/tabs" => "tabs#create"
 
   get "/checks" => "checks#index"
+  post "/checks" => "checks#create"
 end

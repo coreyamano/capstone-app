@@ -1,5 +1,5 @@
 class OrderedItemsController < ApplicationController
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
   def index
     ordered_items = OrderedItem.where(user_id: current_user.id, status: "ordered")
