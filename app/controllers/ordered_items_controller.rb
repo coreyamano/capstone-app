@@ -9,11 +9,11 @@ class OrderedItemsController < ApplicationController
   def create
     ordered_item = OrderedItem.new(
       user_id: current_user.id,
-      tab_id: params[:tab_id]
+      tab_id: params[:tab_id],
       product_id: params[:product_id],
       quantity: params[:quantity],
       status: "ordered",
-      type: params[:type]
+      dining_option: params[:dining_option],
       check_id: params[:check_id],
     )
 
@@ -34,6 +34,5 @@ class OrderedItemsController < ApplicationController
     else
       render json: { Error: ordered_item.errors.full_messages }, status: :unprocessable_entity
     end
-  end  
-
+  end
 end
