@@ -1,5 +1,5 @@
 class ChecksController < ApplicationController
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
   def index
     checks = Check.where(user_id: current_user.id)

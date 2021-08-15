@@ -3,6 +3,7 @@ class OrderedItemsController < ApplicationController
 
   def index
     ordered_items = OrderedItem.where(user_id: current_user.id, status: "ordered")
+    # purchased_items = OrderedItem.where(user_id: current_user.id, status: "purchased")
     render json: ordered_items.as_json
   end
 
@@ -11,6 +12,8 @@ class OrderedItemsController < ApplicationController
       user_id: current_user.id,
       tab_id: params[:tab_id],
       product_id: params[:product_id],
+      product_item_name: Product.where(id: params[:product_id])[0]["item_name"],
+      product_menu_category: Product.where(id: params[:product_id])[0]["menu_category"],
       quantity: params[:quantity],
       status: "ordered",
       dining_option: params[:dining_option],
