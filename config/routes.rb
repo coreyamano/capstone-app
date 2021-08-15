@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   get "/ordered_items" => "ordered_items#index"
   post "/ordered_items" => "ordered_items#create"
+  patch "/ordered_items/:id" => "ordered_items#update"
   delete "/ordered_items" => "ordered_items#destroy"
 
   get "/tabs" => "tabs#index"
@@ -18,4 +19,6 @@ Rails.application.routes.draw do
 
   get "/checks" => "checks#index"
   post "/checks" => "checks#create"
+  patch "/checks/:id" => "checks#update"
+  delete "/checks" => "checks#destroy"
 end
