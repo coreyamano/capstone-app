@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   get "/ordered_items" => "ordered_items#index"
   post "/ordered_items" => "ordered_items#create"
+  delete "/ordered_items" => "ordered_items#destroy"
 
   get "/tabs" => "tabs#index"
   post "/tabs" => "tabs#create"
