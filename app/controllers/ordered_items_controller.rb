@@ -2,7 +2,7 @@ class OrderedItemsController < ApplicationController
   # before_action :authenticate_user
 
   def index
-    ordered_items = OrderedItem.where(user_id: current_user.id)
+    ordered_items = OrderedItem.where(user_id: current_user.id, status: "ordered")
     # purchased_items = OrderedItem.where(user_id: current_user.id, status: "purchased")
     render json: ordered_items.as_json
   end
@@ -22,7 +22,7 @@ class OrderedItemsController < ApplicationController
       check_id: params[:check_id],
     )
 
-    if ordered_item.save
+    if ordered_item.save!
       render json: ordered_item.as_json
     else
       render json: { Error: ordered_item.errors.full_message }, status: :unprocessable_entity

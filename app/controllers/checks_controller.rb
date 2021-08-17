@@ -2,7 +2,7 @@ class ChecksController < ApplicationController
   # before_action :authenticate_user
 
   def index
-    checks = Check.where(user_id: current_user.id)
+    checks = Check.where(user_id: current_user.id, status: "open")
     render json: checks.as_json
   end
 
@@ -22,6 +22,7 @@ class ChecksController < ApplicationController
     #save the order
     check = Check.new(
       user_id: current_user.id,
+      status: "open",
       subtotal: calculated_subtotal,
       tax: calculated_tax,
       total: calculated_subtotal + calculated_tax,
@@ -30,7 +31,7 @@ class ChecksController < ApplicationController
     check.save
     # go back and update the carted_products with the order id
     ordered_items.each do |item|
-      item.update(status: "processing", check_id: check.id)
+      item.update(status: "checked out", check_id: check.id)
     end
     render json: check.as_json
   end
