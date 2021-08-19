@@ -18,6 +18,7 @@ class OrderedItemsController < ApplicationController
       quantity: params[:quantity],
       # subtotal: (Product.where(id: params[:product_id])[0]["price"]) * params[:quantity],
       status: "ordered",
+      customer_note: params[:customer_note],
       dining_option: params[:dining_option],
       check_id: params[:check_id],
     )
@@ -29,8 +30,15 @@ class OrderedItemsController < ApplicationController
     end
   end
 
-  # def update
-  # end
+  def update
+    ordered_item = OrderedItem.find_by(id: params[:id])
+    ordered_item.update(
+      quantity: params[:quantity] || ordered_item.quantity,
+      customer_note: params[:customer_note] || ordered_item.customer_note,
+      dining_option: params[:dining_option] || ordered_item.dining_option,
+    )
+    render json: ordered_item
+  end
 
   def destroy
     ordered_item_id = params[:id]
