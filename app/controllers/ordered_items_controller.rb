@@ -3,8 +3,13 @@ class OrderedItemsController < ApplicationController
 
   def index
     ordered_items = OrderedItem.where(user_id: current_user.id, status: "ordered")
-    # purchased_items = OrderedItem.where(user_id: current_user.id, status: "purchased")
-    render json: ordered_items.as_json
+    render_items = []
+    ordered_items.each do |ordered_item|
+      render_item = ordered_item.as_json
+      render_item["submitted_time"] = ordered_item.created_at.strftime("%b %e, %l:%M %p")
+      render_items << render_item
+    end
+    render json: render_items
   end
 
   def create
@@ -24,7 +29,9 @@ class OrderedItemsController < ApplicationController
     )
 
     if ordered_item.save!
-      render json: ordered_item.as_json
+      render_item = ordered_item.as_json
+      render_item["submitted_time"] = ordered_item.created_at.strftime("%b %e, %l:%M %p")
+      render json: render_item
     else
       render json: { Error: ordered_item.errors.full_message }, status: :unprocessable_entity
     end
@@ -37,7 +44,9 @@ class OrderedItemsController < ApplicationController
       customer_note: params[:customer_note] || ordered_item.customer_note,
       dining_option: params[:dining_option] || ordered_item.dining_option,
     )
-    render json: ordered_item
+    render_item = ordered_item.as_json
+    render_item["submitted_time"] = ordered_item.created_at.strftime("%b %e, %l:%M %p")
+    render json: render_item
   end
 
   def destroy
