@@ -23,4 +23,6 @@ Rails.application.routes.draw do
   delete "/checks/:id" => "checks#destroy"
 
   get "/kitchen_orders" => "kitchen_orders#index"
+  patch "/kitchen_orders/:id" => "kitchen_orders#update"
+  post "/kitchen_orders" => "kitchen_orders#create"
 end
