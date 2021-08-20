@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   def index
-    products = Product.all
+    products = Product.where(availability: true)
+    products = products.sort_by { |product| product.menu_category }
     render json: products.as_json
   end
 

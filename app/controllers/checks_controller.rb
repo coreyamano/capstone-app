@@ -31,8 +31,16 @@ class ChecksController < ApplicationController
     check.save
     # go back and update the carted_products with the order id
     ordered_items.each do |item|
-      item.update(status: "checked out", check_id: check.id)
+      item.update(status: "checking out", check_id: check.id)
     end
+    render json: check.as_json
+  end
+
+  def update
+    check = Check.find_by(id: params[:id])
+    check.update(
+      status: "closed",
+    )
     render json: check.as_json
   end
 end
