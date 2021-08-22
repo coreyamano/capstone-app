@@ -12,7 +12,7 @@ class KitchenOrdersController < ApplicationController
   end
 
   def create
-    ordered_items = OrderedItem.where(user_id: current_user.id, status: "ordered")
+    ordered_items = OrderedItem.where(user_id: current_user.id, status: "in cart")
     ordered_items.each do |item|
       item.update(
         status: "preparing",

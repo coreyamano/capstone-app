@@ -2,7 +2,7 @@ class OrderedItemsController < ApplicationController
   # before_action :authenticate_user
 
   def index
-    ordered_items = OrderedItem.where(user_id: current_user.id, status: "ordered")
+    ordered_items = OrderedItem.where(user_id: current_user.id, status: "in cart")
     render_items = []
     ordered_items.each do |ordered_item|
       render_item = ordered_item.as_json
@@ -22,7 +22,7 @@ class OrderedItemsController < ApplicationController
       product_price: Product.where(id: params[:product_id])[0]["price"],
       quantity: params[:quantity],
       # subtotal: (Product.where(id: params[:product_id])[0]["price"]) * params[:quantity],
-      status: "ordered",
+      status: "in cart",
       customer_note: params[:customer_note],
       dining_option: params[:dining_option],
       check_id: params[:check_id],

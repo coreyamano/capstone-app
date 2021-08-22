@@ -8,7 +8,7 @@ class ChecksController < ApplicationController
 
   def create
     #figure out which carted_products are in the shopping cart
-    ordered_items = OrderedItem.where(user_id: current_user.id, status: ["ordered", "preparing", "completed"])
+    ordered_items = OrderedItem.where(user_id: current_user.id, status: ["preparing", "completed"])
     # find out how much each of them cost
     calculated_subtotal = 0
     calculated_tax = 0
@@ -41,6 +41,10 @@ class ChecksController < ApplicationController
     check.update(
       status: "closed",
     )
+    ordered_items = OrderedItem.where(user_id: current_user.id, status: ["checking out"])
+    ordered_items.each do |item|
+      item.update(status: "paid")
+    end
     render json: check.as_json
   end
 end
