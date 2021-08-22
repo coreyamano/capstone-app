@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   delete "/products/:id" => "products#destroy"
 
   get "/ordered_items" => "ordered_items#index"
+  get "/ordered_items/:status" => "ordered_items#show"
   post "/ordered_items" => "ordered_items#create"
   patch "/ordered_items/:id" => "ordered_items#update"
   delete "/ordered_items/:id" => "ordered_items#destroy"
@@ -25,4 +26,6 @@ Rails.application.routes.draw do
   get "/kitchen_orders" => "kitchen_orders#index"
   patch "/kitchen_orders/:id" => "kitchen_orders#update"
   post "/kitchen_orders" => "kitchen_orders#create"
+
+  get "/kitchen_tickets" => "kitchen_tickets#index"
 end

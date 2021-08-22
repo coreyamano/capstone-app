@@ -2,7 +2,7 @@ class OrderedItemsController < ApplicationController
   # before_action :authenticate_user
 
   def index
-    ordered_items = OrderedItem.where(user_id: current_user.id, status: ["ordered", "preparing", "completed", "sold out (removed)"])
+    ordered_items = OrderedItem.where(user_id: current_user.id, status: "ordered")
     render_items = []
     ordered_items.each do |ordered_item|
       render_item = ordered_item.as_json
@@ -43,6 +43,7 @@ class OrderedItemsController < ApplicationController
       quantity: params[:quantity] || ordered_item.quantity,
       customer_note: params[:customer_note] || ordered_item.customer_note,
       dining_option: params[:dining_option] || ordered_item.dining_option,
+      status: params[:status] || ordered_item.status,
     )
     render_item = ordered_item.as_json
     render_item["submitted_time"] = ordered_item.created_at.strftime("%b %e, %l:%M %p")
