@@ -28,4 +28,6 @@ Rails.application.routes.draw do
   post "/kitchen_orders" => "kitchen_orders#create"
 
   get "/kitchen_tickets" => "kitchen_tickets#index"
+
+  get "order_updates" => "order_updates#index"
 end

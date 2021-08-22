@@ -13,34 +13,39 @@ class OrderedItemsController < ApplicationController
   end
 
   def create
-    ordered_item = OrderedItem.new(
-      user_id: current_user.id,
-      tab_id: params[:tab_id],
-      product_id: params[:product_id],
-      product_item_name: Product.where(id: params[:product_id])[0]["item_name"],
-      product_menu_category: Product.where(id: params[:product_id])[0]["menu_category"],
-      product_price: Product.where(id: params[:product_id])[0]["price"],
-      quantity: params[:quantity],
-      # subtotal: (Product.where(id: params[:product_id])[0]["price"]) * params[:quantity],
-      status: "in cart",
-      customer_note: params[:customer_note],
-      dining_option: params[:dining_option],
-      check_id: params[:check_id],
-    )
-
-    if ordered_item.save!
-      render_item = ordered_item.as_json
-      render_item["submitted_time"] = ordered_item.created_at.strftime("%b %e, %l:%M %p")
-      render json: render_item
-    else
-      render json: { Error: ordered_item.errors.full_message }, status: :unprocessable_entity
+    render_items = []
+    render = true
+    params[:quantity].to_i.times do
+      ordered_item = OrderedItem.new(
+        user_id: current_user.id,
+        tab_id: params[:tab_id],
+        product_id: params[:product_id],
+        product_item_name: Product.where(id: params[:product_id])[0]["item_name"],
+        product_menu_category: Product.where(id: params[:product_id])[0]["menu_category"],
+        product_price: Product.where(id: params[:product_id])[0]["price"],
+        quantity: 1,
+        # subtotal: (Product.where(id: params[:product_id])[0]["price"]) * params[:quantity],
+        status: "in cart",
+        customer_note: params[:customer_note],
+        dining_option: params[:dining_option],
+        check_id: params[:check_id],
+      )
+      if ordered_item.save!
+        render_item = ordered_item.as_json
+        render_item["submitted_time"] = ordered_item.created_at.strftime("%b %e, %l:%M %p")
+        render_items << render_item
+      else
+        render json: { Error: ordered_item.errors.full_message }, status: :unprocessable_entity
+        render = false
+        break
+      end
     end
+    render json: render_items if render
   end
 
   def update
     ordered_item = OrderedItem.find_by(id: params[:id])
     ordered_item.update(
-      quantity: params[:quantity] || ordered_item.quantity,
       customer_note: params[:customer_note] || ordered_item.customer_note,
       dining_option: params[:dining_option] || ordered_item.dining_option,
       status: params[:status] || ordered_item.status,
