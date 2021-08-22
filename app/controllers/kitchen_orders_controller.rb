@@ -7,6 +7,7 @@ class KitchenOrdersController < ApplicationController
       render_item["submitted_time"] = ordered_item.updated_at.strftime("%b %e, %l:%M %p")
       render_items << render_item
     end
+
     render json: render_items
   end
 
@@ -18,12 +19,21 @@ class KitchenOrdersController < ApplicationController
         dining_option: params[:dining_option],
       )
     end
+    # tab = []
+    # each_items = {}
+    # ordered_items.each do |prod|
+    #   name = prod[:product_item_name]
+    #   customer_note = prod[:customer_note]
+    #   time = prod[:submitted_time]
+    #   item = { product_item_name: name, customer_note: customer_note, submitted_time: time }
+    #   tab << item
+    # end
   end
 
   def update
     ordered_item = OrderedItem.find_by(id: params[:id])
     ordered_item.update(
-      status: params[:dining_option] || ordered_item.status,
+      status: params[:status],
     )
     render_item = ordered_item.as_json
     render_item["submitted_time"] = ordered_item.updated_at.strftime("%b %e, %l:%M %p")

@@ -10,7 +10,7 @@ class TabsController < ApplicationController
     tab = Tab.find(params[:id])
     render json: tab.as_json
   end
-
+  
   def create
     tab = Tab.new(
       tab_name: params[:tab_name],

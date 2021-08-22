@@ -8,7 +8,7 @@ class ChecksController < ApplicationController
 
   def create
     #figure out which carted_products are in the shopping cart
-    ordered_items = OrderedItem.where(user_id: current_user.id, status: "ordered")
+    ordered_items = OrderedItem.where(user_id: current_user.id, status: ["ordered", "preparing", "completed"])
     # find out how much each of them cost
     calculated_subtotal = 0
     calculated_tax = 0

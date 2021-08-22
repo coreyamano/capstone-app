@@ -2,7 +2,7 @@ class OrderedItemsController < ApplicationController
   # before_action :authenticate_user
 
   def index
-    ordered_items = OrderedItem.where(user_id: current_user.id, status: "ordered")
+    ordered_items = OrderedItem.where(user_id: current_user.id, status: ["ordered", "preparing", "completed", "sold out (removed)"])
     render_items = []
     ordered_items.each do |ordered_item|
       render_item = ordered_item.as_json
