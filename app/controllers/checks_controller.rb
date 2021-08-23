@@ -31,7 +31,8 @@ class ChecksController < ApplicationController
     check.save
     # go back and update the carted_products with the order id
     ordered_items.each do |item|
-      item.update(check_id: check.id)
+      item.update(check_id: check.id,
+                  status: "checking out")
     end
     render json: check.as_json
   end
@@ -41,6 +42,12 @@ class ChecksController < ApplicationController
     check.update(
       status: "closed",
     )
+    ordered_items = OrderedItem.where(user_id: current_user.id, status: "checking out")
+    ordered_items.each do |item|
+      item.update(
+        status: "paid",
+      )
+    end
     render json: check.as_json
   end
 end

@@ -1,6 +1,6 @@
 class OrderUpdatesController < ApplicationController
   def index
-    ordered_items = OrderedItem.where(status: ["preparing", "completed"])
+    ordered_items = OrderedItem.where(user_id: current_user.id, status: ["preparing", "completed"])
     render_items = []
     ordered_items.each do |ordered_item|
       render_item = ordered_item.as_json

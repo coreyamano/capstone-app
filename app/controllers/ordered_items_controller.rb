@@ -26,6 +26,7 @@ class OrderedItemsController < ApplicationController
         quantity: 1,
         # subtotal: (Product.where(id: params[:product_id])[0]["price"]) * params[:quantity],
         status: "in cart",
+        tab_name: params[:tab_name],
         customer_note: params[:customer_note],
         dining_option: params[:dining_option],
         check_id: params[:check_id],
@@ -49,6 +50,7 @@ class OrderedItemsController < ApplicationController
       customer_note: params[:customer_note] || ordered_item.customer_note,
       dining_option: params[:dining_option] || ordered_item.dining_option,
       status: params[:status] || ordered_item.status,
+      tab_name: params[:tab_name] || ordered_item.tab_name,
     )
     render_item = ordered_item.as_json
     render_item["submitted_time"] = ordered_item.created_at.strftime("%b %e, %l:%M %p")
