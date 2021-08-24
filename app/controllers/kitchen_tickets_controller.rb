@@ -1,6 +1,6 @@
 class KitchenTicketsController < ApplicationController
   def index
-    ordered_items = OrderedItem.where(status: ["preparing", "completed"]).order(status: :asc, created_at: :asc)
+    ordered_items = OrderedItem.where(status: ["preparing", "completed"]).order(status: :desc, created_at: :asc)
     render_items = []
     ordered_items.each do |ordered_item|
       render_item = ordered_item.as_json
